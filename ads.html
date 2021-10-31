@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<canvas id="myCanvas" width="1150" height="500" style="border: 1px solid"></canvas>
+<img src="picture/bird1.png" id="myBird" alt="" style="display: none">
+<img src="picture/base1.png" id="myBase" alt="" style="display: none">
+<img src="picture/pipe1.png" id="myPipe1" alt="" style="display: none">
+<img src="picture/pipe2.png" id="myPipe2" alt="" style="display: none">
+<script>
+    let score = 0;
+    // let gap = 85;
+    class Bird {
+        speed = 2;
+        bird = document.getElementById("myBird");
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        getX() {
+            return this.x;
+        }
+        getY() {
+            return this.y;
+        }
+        move() {
+            this.y += this.speed;
+        }
+        draw() {
+            let ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.drawImage(this.bird, this.x, this.y, 60, 50);
+        }
+        setY(y) {
+            this.y -= y;
+        }
+    }
+    let myBird = new Bird(200, 200);
+
+    class Pipe {
+        speed1 = 2;
+        pipeNorth = document.getElementById("myPipe1");
+        pipeSouth = document.getElementById("myPipe2");
+
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        // getX() {
+        //     return this.x;
+        // }
+        // getY() {
+        //     return this.y;
+        // }
+        movePipe() {
+            this.x -= this.speed1;
+        }
+
+        drawPipeNorth() {
+            let ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.drawImage(this.pipeNorth, this.x, this.y, 60, 150);
+        }
+
+        drawPipeSouth() {
+            let ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.drawImage(this.pipeSouth, this.x, this.y, 60, 220);
+        }
+
+        getX() {
+            return this.x;
+        }
+        getY() {
+            return this.y;
+        }
+    }
+
+    let myPipeNorth = [], myPipeSouth = [];
+    for (let i =600; i <= 30000; i+=300) {
+        myPipeNorth[i] = new Pipe(i, 0);
+        myPipeSouth[i] = new Pipe(i, 300);
+    }
+
+    class background {
+        base = document.getElementById("myBase");
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        draw2() {
+            let ctx = document.getElementById("myCanvas").getContext("2d");
+            ctx.drawImage(this.base, 0, 0, 1500, 500);
+        }
+    }
+    let myBase = new background(0, 0);
+    function run() {
+        // myBird.checkDie();
+        let ctx = document.getElementById("myCanvas").getContext("2d");
+        ctx.beginPath();
+        ctx.clearRect(0, 0, 1500, 500);
+        myBase.draw2();
+        for (let i = 600; i <= 30000; i += 300) {
+            myPipeNorth[i].drawPipeNorth();
+            myPipeNorth[i].movePipe();
+            myPipeSouth[i].drawPipeSouth();
+            myPipeSouth[i].movePipe();
+            // if (myPipeNorth[i].getX() === myBird.getX() + 50 && (myPipeSouth[i].getY() - 50 <= myBird.getY()
+            // ||  myBird.getY() <= myPipeNorth[i].getY() + 56 ))
+            // {
+            //     myBird.checkDie();
+            // }
+            if ((myPipeNorth[i].getX() === myBird.getX() + 50 && myPipeNorth[i].getY()  >= myBird.getY()) ||
+                (myBird.getX() + 50 === myPipeSouth[i].getX() && myPipeSouth[i].getY()  >= myBird.getY()) ||
+                (myBird.getX() === ctx.x))
+            {
+                alert('Score : ' + score)
+                break;}
+            // }else if ( myBird.getX() + 50 > myPipeNorth[i].getX() && myBird.getY() > myPipeNorth[i].getY() &&
+            //     myBird.getX() + 50 < myPipeSouth[i].getX() && myBird.getY() < myPipeSouth[i].getY()) {
+            //     score++
+            // }
+
+
+            //     && myPipeSouth[i].x === myBird.getX()
+            // && myPipeNorth[i].y !== myBird.getY() && myPipeSouth[i].y !== myBird.getY())  {
+            //     score++
+            // }
+        }
+        myBird.draw();
+        myBird.move();
+        requestAnimationFrame(run);
+    }
+    // function checkCol() {
+    //     if ((myBird.getY() + 200) || (myBird.getX() + 200) <= (myPipeSouth.x + 150) && (myPipeSouth.y + 150) ){
+    //         return true;
+    //     }else {
+    //         return false;
+    //     }
+    // }
+    document.addEventListener("keydown", function () {
+        myBird.setY(50);
+    });
+    // checkCol()
+    run()
+</script>
+</body>
+</html>
