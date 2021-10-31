@@ -91,7 +91,7 @@
         }
         draw2() {
             let ctx = document.getElementById("myCanvas").getContext("2d");
-            ctx.drawImage(this.base, 0, 0, 1500, 500);
+            ctx.drawImage(this.base,this.x, this.y, 1500, 500);
         }
     }
     let myBase = new background(0, 0);
@@ -106,17 +106,18 @@
             myPipeNorth[i].movePipe();
             myPipeSouth[i].drawPipeSouth();
             myPipeSouth[i].movePipe();
-            // if (myPipeNorth[i].getX() === myBird.getX() + 50 && (myPipeSouth[i].getY() - 50 <= myBird.getY()
-            // ||  myBird.getY() <= myPipeNorth[i].getY() + 56 ))
-            // {
-            //     myBird.checkDie();
-            // }
-            if ((myPipeNorth[i].getX() === myBird.getX() + 50 && myPipeNorth[i].getY()  >= myBird.getY()) ||
-                (myBird.getX() + 50 === myPipeSouth[i].getX() && myPipeSouth[i].getY()  >= myBird.getY()) ||
-                (myBird.getX() === ctx.x))
+            if (myPipeNorth[i].getX() === myBird.getX() + 50 && (myPipeSouth[i].getY() - 50 <= myBird.getY()
+            ||  myBird.getY() <= myPipeNorth[i].getY() + 56 ))
             {
-                alert('Score : ' + score)
-                break;}
+                alert('you lose !\n' + 'your score: ' + score);
+                window.location.reload();
+            } else if (myPipeNorth[i].getX() <= myBird.getX()) {
+                score = (i - 300) / 300 ;
+            }
+            // if ((myPipeNorth[i].getX() === myBird.getX() + 50 && myPipeNorth[i].getY()  >= myBird.getY()) ||
+            //     (myBird.getX() + 50 === myPipeSouth[i].getX() && myPipeSouth[i].getY()  >= myBird.getY())) {
+            //     alert('Score : ' + score)
+            //     break;
             // }else if ( myBird.getX() + 50 > myPipeNorth[i].getX() && myBird.getY() > myPipeNorth[i].getY() &&
             //     myBird.getX() + 50 < myPipeSouth[i].getX() && myBird.getY() < myPipeSouth[i].getY()) {
             //     score++
@@ -127,6 +128,7 @@
             // && myPipeNorth[i].y !== myBird.getY() && myPipeSouth[i].y !== myBird.getY())  {
             //     score++
             // }
+
         }
         myBird.draw();
         myBird.move();
