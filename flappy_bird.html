@@ -13,7 +13,6 @@
 <img src="picture/pipe2.png" id="myPipe2" alt="" style="display: none">
 <script>
     let score = 0;
-    // let gap = 85;
     class Bird {
         speed = 2;
         bird = document.getElementById("myBird");
@@ -95,8 +94,8 @@
         }
     }
     let myBase = new background(0, 0);
+
     function run() {
-        // myBird.checkDie();
         let ctx = document.getElementById("myCanvas").getContext("2d");
         ctx.beginPath();
         ctx.clearRect(0, 0, 1500, 500);
@@ -109,42 +108,28 @@
             if (myPipeNorth[i].getX() === myBird.getX() + 50 && (myPipeSouth[i].getY() - 50 <= myBird.getY()
             ||  myBird.getY() <= myPipeNorth[i].getY() + 56 ))
             {
-                alert('you lose !\n' + 'your score: ' + score);
+                alert('you lose !\n' + 'your score : ' + score);
                 window.location.reload();
             } else if (myPipeNorth[i].getX() <= myBird.getX()) {
                 score = (i - 300) / 300 ;
             }
-            // if ((myPipeNorth[i].getX() === myBird.getX() + 50 && myPipeNorth[i].getY()  >= myBird.getY()) ||
-            //     (myBird.getX() + 50 === myPipeSouth[i].getX() && myPipeSouth[i].getY()  >= myBird.getY())) {
+
+            // if ((myPipeNorth[i].getX() === myBird.getX() && myPipeNorth[i].getY() + 50 >= myBird.getY() ) ||
+            //     (myBird.getX() === myPipeSouth[i].getX() && myPipeSouth[i].getY() + 56 >= myBird.getY() )) {
             //     alert('Score : ' + score)
-            //     break;
+            //      window.location.reload();
             // }else if ( myBird.getX() + 50 > myPipeNorth[i].getX() && myBird.getY() > myPipeNorth[i].getY() &&
             //     myBird.getX() + 50 < myPipeSouth[i].getX() && myBird.getY() < myPipeSouth[i].getY()) {
-            //     score++
+            //     score = (i - 300) / 300 ;
             // }
-
-
-            //     && myPipeSouth[i].x === myBird.getX()
-            // && myPipeNorth[i].y !== myBird.getY() && myPipeSouth[i].y !== myBird.getY())  {
-            //     score++
-            // }
-
         }
         myBird.draw();
         myBird.move();
         requestAnimationFrame(run);
     }
-    // function checkCol() {
-    //     if ((myBird.getY() + 200) || (myBird.getX() + 200) <= (myPipeSouth.x + 150) && (myPipeSouth.y + 150) ){
-    //         return true;
-    //     }else {
-    //         return false;
-    //     }
-    // }
     document.addEventListener("keydown", function () {
         myBird.setY(50);
     });
-    // checkCol()
     run()
 </script>
 </body>
